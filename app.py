@@ -187,7 +187,7 @@ if hasattr(model, "predict_proba"):
             st.progress(float(probability))
 
 st.caption(
-    "Shamsudeen
-    Agro Solutions — "
+    "Shamsudeen"
+    "Agro Solutions — "
     "AI decision-support prototype"
 )
