@@ -140,35 +140,33 @@ if submit:
     ])
 
 
-    # Prediction
-    prediction = model.predict(
-        input_data
-    )[0]
+prediction = model.predict(input_data)[0]
 
+crop_name = str(prediction).replace("_", " ").title()
 
-    # Display result
-    st.success(
-        f"Primary Recommended Crop: "
-        f"**{prediction.replace('_', ' ').title()}**"
-    )
+st.success(
+    f"🌱 Primary Recommended Crop: **{crop_name}**"
+)
 
+if hasattr(model, "predict_proba"):
 
-    # ------------------------------------------------
-    # TOP 3 RECOMMENDATIONS
-    # ------------------------------------------------
+    probabilities = model.predict_proba(input_data)[0]
 
-    if hasattr(model, "predict_proba"):
+    if hasattr(model, "classes_"):
+        classes = model.classes_
 
-        probabilities = (
-            model.predict_proba(input_data)[0]
-        )
+    elif hasattr(model, "named_steps"):
+        classes = None
 
-        classes = (
-            model
-            .named_steps["classifier"]
-            .classes_
-        )
+        for step_name, step_model in model.named_steps.items():
+            if hasattr(step_model, "classes_"):
+                classes = step_model.classes_
+                break
 
+    else:
+        classes = None
+
+    if classes is not None:
 
         recommendations = sorted(
             zip(classes, probabilities),
@@ -176,31 +174,20 @@ if submit:
             reverse=True
         )[:3]
 
-
-        st.subheader(
-            "Top 3 Crop Recommendations"
-        )
-
+        st.subheader("🏆 Top 3 Crop Recommendations")
 
         for crop, probability in recommendations:
 
-            crop_name = (
-                crop
-                .replace("_", " ")
-                .title()
-            )
+            crop_name = str(crop).replace("_", " ").title()
 
             st.write(
-                f"**{crop_name}** — "
-                f"{probability:.1%}"
+                f"**{crop_name}** — {probability:.1%}"
             )
 
-            st.progress(
-                float(probability)
-            )
-
+            st.progress(float(probability))
 
 st.caption(
-    "MannieLytics Agro Solutions — "
+    "Shamsudeen
+    Agro Solutions — "
     "AI decision-support prototype"
 )
