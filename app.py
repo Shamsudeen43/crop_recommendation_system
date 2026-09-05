@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import joblib
-from pathlib import Path
 
 
 # ------------------------------------------------
@@ -19,13 +18,7 @@ st.set_page_config(
 # LOAD MODEL
 # ------------------------------------------------
 
-MODEL_PATH = (
-    Path(__file__).parent
-    / "artifacts"
-    / "crop_recommender.joblib"
-)
-
-model = joblib.load(MODEL_PATH)
+model = joblib.load("crop_recommender.joblib")
 
 
 # ------------------------------------------------
