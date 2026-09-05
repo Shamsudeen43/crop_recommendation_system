@@ -8,7 +8,7 @@ import joblib
 # ------------------------------------------------
 
 st.set_page_config(
-    page_title="MannieLytics Crop Recommendation",
+    page_title="Shamsudeen Crop Recommendation",
     page_icon="🌱",
     layout="centered"
 )
@@ -25,7 +25,7 @@ model = joblib.load("crop_recommender.joblib")
 # APPLICATION TITLE
 # ------------------------------------------------
 
-st.title("🌱 MannieLytics Agro Solutions")
+st.title("🌱 Shamsudeen Agro Solutions")
 
 st.header(
     "AI Crop Recommendation System"
